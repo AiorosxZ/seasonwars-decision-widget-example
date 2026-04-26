@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap');
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background:#0A0C10;
+    color:#E2E8F0;
+    font-family:'Syne', sans-serif;
+    padding:60px 20px;
+  }
+
+  .container {
+    max-width:900px;
+    margin:0 auto;
+  }
+
+  .hero {
+    text-align:center;
+    margin-bottom:60px;
+  }
+
+  .title {
+    font-size:34px;
+    font-weight:800;
+    color:white;
+    margin-bottom:12px;
+  }
+
+  .subtitle {
+    font-size:14px;
+    font-family:'Space Mono', monospace;
+    color:#64748B;
+    line-height:1.6;
+  }
+
+  .section {
+    margin-bottom:50px;
+  }
+
+  .section-title {
+    font-size:12px;
+    font-family:'Space Mono', monospace;
+    color:#64748B;
+    margin-bottom:16px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+
+  .card {
+    background:#0F1318;
+    border:1px solid #1E2530;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:16px;
+  }
+
+  .card-title {
+    font-size:16px;
+    font-weight:700;
+    margin-bottom:6px;
+  }
+
+  .card-sub {
+    font-size:12px;
+    color:#64748B;
+    font-family:'Space Mono', monospace;
+    margin-bottom:10px;
+  }
+
+  .card-desc {
+    font-size:13px;
+    line-height:1.7;
+    color:#CBD5F5;
+  }
+
+  .highlight {
+    color:#60A5FA;
+  }
+
+  .code {
+    margin-top:12px;
+    background:#0A0C10;
+    border:1px solid #1E2530;
+    padding:12px;
+    border-radius:10px;
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    color:#94A3B8;
+  }
+
+  .cta {
+    text-align:center;
+    margin-top:60px;
+  }
+
+  .cta a {
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:10px;
+    border:1px solid rgba(96,165,250,0.3);
+    color:#60A5FA;
+    text-decoration:none;
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    background:rgba(96,165,250,0.08);
+  }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="title">xZod is a Decision Layer</div>
+    <div class="subtitle">
+      Not just a protocol.<br>
+      A primitive that lets any app turn transactions into strategic decisions.
+    </div>
+  </div>
+
+  <!-- WHY -->
+  <div class="section">
+    <div class="section-title">Why integrate xZod</div>
+
+    <div class="card">
+      <div class="card-title">Transactions are currently static</div>
+      <div class="card-desc">
+        In most apps, a transaction is just execution.<br>
+        With xZod, it becomes a <span class="highlight">decision with tradeoffs</span> — timing, asset, cycle, and strategy matter.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Add depth without complexity</div>
+      <div class="card-desc">
+        You don’t need to redesign your protocol.<br>
+        Just plug xZod and instantly add <span class="highlight">strategy, optimization, and meta-layer gameplay</span>.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DEFI -->
+  <div class="section">
+    <div class="section-title">DeFi Use Cases</div>
+
+    <div class="card">
+      <div class="card-title">🔥 Yield Optimization Layer</div>
+      <div class="card-sub">Burn before deposit</div>
+      <div class="card-desc">
+        Let users decide where to burn before entering a vault.<br>
+        → Best burn = boosted position / rewards
+      </div>
+      <div class="code">
+window.xzod.quote(1000)
+// → { best: Aries, pts: 1200 }
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚡ Dynamic Fees Strategy</div>
+      <div class="card-sub">Cheaper entry paths</div>
+      <div class="card-desc">
+        Users optimize burn strategy to reduce effective cost.<br>
+        → introduces skill-based execution
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Aggregator Differentiation</div>
+      <div class="card-sub">Add decision UX</div>
+      <div class="card-desc">
+        Integrate widget into a DEX / aggregator.<br>
+        → “Best execution” becomes <span class="highlight">Best decision</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GAMING -->
+  <div class="section">
+    <div class="section-title">Gaming Use Cases</div>
+
+    <div class="card">
+      <div class="card-title">🎮 On-chain strategy layer</div>
+      <div class="card-sub">Timing + burn = gameplay</div>
+      <div class="card-desc">
+        Players choose when and where to burn.<br>
+        → same action, different outcomes depending on timing
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏆 Seasonal competition</div>
+      <div class="card-sub">Leaderboard driven</div>
+      <div class="card-desc">
+        Integrate xZod into any game economy.<br>
+        → players compete through optimization, not just volume
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔁 Meta-game layer</div>
+      <div class="card-sub">Cross-game strategy</div>
+      <div class="card-desc">
+        Same burn logic across multiple games.<br>
+        → creates a shared strategic layer between apps
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HOW -->
+  <div class="section">
+    <div class="section-title">How to integrate</div>
+
+    <div class="card">
+      <div class="card-desc">
+        Add xZod in 2 lines:
+      </div>
+      <div class="code">
+&lt;script src="https://xzod.io/widget.js"&gt;&lt;/script&gt;
+&lt;div id="xzod-widget"&gt;&lt;/div&gt;
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-desc">
+        Or use it as a pure logic layer:
+      </div>
+      <div class="code">
+const decision = window.xzod.quote(5000);
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <a href="https://aiorosxz.github.io/seasonwars-decision-widget-example" target="_blank">
+      View live demo →
+    </a>
+  </div>
+
+</div>
+
+</body>
+</html>
