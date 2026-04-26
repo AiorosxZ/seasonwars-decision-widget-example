@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* Demo page */
+  body {
+    background: #0A0C10;
+    color: #E2E8F0;
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+    gap: 40px;
+  }
+
+  .demo-header { text-align: center; max-width: 600px; }
+  .demo-title { font-size: 13px; font-family: 'Space Mono', monospace; color: #64748B; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .demo-headline { font-size: 28px; font-weight: 800; color: white; margin-bottom: 8px; }
+  .demo-sub { font-size: 13px; color: #64748B; font-family: 'Space Mono', monospace; line-height: 1.6; }
+
+  /* Integration code preview */
+  .code-preview {
+    background: #0F1318;
+    border: 1px solid #1E2530;
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: #64748B;
+    max-width: 480px;
+    width: 100%;
+    text-align: left;
+  }
+  .code-preview .comment { color: #334155; }
+  .code-preview .tag { color: #60A5FA; }
+  .code-preview .attr { color: #A78BFA; }
+  .code-preview .val { color: #34D399; }
+
+  /* ═══════════════════════════════════════
+     THE WIDGET — standalone, self-contained
+     ═══════════════════════════════════════ */
+  .xzod-widget {
+    width: 300px;
+    background: #0F1318;
+    border: 1px solid #1E2530;
+    border-radius: 16px;
+    overflow: hidden;
+    font-family: 'Space Mono', monospace;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  /* Widget header */
+  .xw-header {
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid #1E2530;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .xw-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #E2E8F0;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .xw-title-icon {
+    width: 18px; height: 18px;
+    background: linear-gradient(135deg, #60A5FA, #7C3AED);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+  }
+
+  .xw-live {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 9px; color: #34D399;
+  }
+  .xw-live-dot {
+    width: 5px; height: 5px;
+    background: #34D399; border-radius: 50%;
+    animation: xwpulse 1.5s ease-in-out infinite;
+  }
+  @keyframes xwpulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+  /* Signs row */
+  .xw-signs {
+    padding: 10px 16px;
+    display: flex;
+    gap: 6px;
+    border-bottom: 1px solid #1E2530;
+  }
+
+  .xw-sign {
+    flex: 1;
+    padding: 6px 4px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border: 1px solid;
+  }
+  .xw-sign.hot { background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.2); color: #F97316; }
+  .xw-sign.cold { background: rgba(96,165,250,0.08); border-color: rgba(96,165,250,0.2); color: #60A5FA; }
+  .xw-sign.opp { background: rgba(167,139,250,0.08); border-color: rgba(167,139,250,0.2); color: #A78BFA; }
+
+  .xw-sign-emoji { font-size: 12px; display: block; margin-bottom: 2px; }
+  .xw-sign-name { font-size: 8px; display: block; margin-top: 1px; opacity: 0.8; }
+
+  /* Amount input */
+  .xw-input-wrap {
+    padding: 10px 16px;
+    border-bottom: 1px solid #1E2530;
+  }
+
+  .xw-input-label {
+    font-size: 9px;
+    color: #64748B;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .xw-input {
+    width: 100%;
+    background: #161B22;
+    border: 1px solid #1E2530;
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #E2E8F0;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .xw-input:focus { border-color: #60A5FA; }
+
+  /* Result */
+  .xw-result {
+    padding: 14px 16px;
+    border-bottom: 1px solid #1E2530;
+  }
+
+  .xw-result-label {
+    font-size: 9px;
+    color: #64748B;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .xw-result-main {
+    font-size: 15px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 4px;
+    transition: opacity 0.2s;
+  }
+
+  .xw-result-main.updating { opacity: 0.4; }
+
+  .xw-result-sign { color: #60A5FA; }
+
+  .xw-result-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .xw-mult {
+    font-size: 12px;
+    font-weight: 700;
+    color: #34D399;
+    background: rgba(52,211,153,0.1);
+    border: 1px solid rgba(52,211,153,0.15);
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+
+  .xw-pts {
+    font-size: 12px;
+    font-weight: 700;
+    color: #60A5FA;
+  }
+
+  .xw-bonus {
+    font-size: 9px;
+    color: #64748B;
+  }
+
+  /* View full */
+  .xw-view-full {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    font-size: 10px;
+    color: #64748B;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s;
+    border-bottom: 1px solid #1E2530;
+  }
+  .xw-view-full:hover { color: #60A5FA; }
+  .xw-view-arrow { font-size: 10px; }
+
+  /* Footer */
+  .xw-footer {
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .xw-powered {
+    font-size: 9px;
+    color: #334155;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .xw-powered:hover { color: #60A5FA; }
+  .xw-powered-dot { width: 4px; height: 4px; background: #60A5FA; border-radius: 50%; }
+
+  .xw-contract {
+    font-size: 8px;
+    color: #1E2530;
+    transition: color 0.2s;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .xw-contract:hover { color: #64748B; }
+
+  /* Demo footer */
+  .demo-context {
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+  }
+  .demo-context-title { font-size: 11px; font-family: 'Space Mono', monospace; color: #64748B; margin-bottom: 8px; }
+  .demo-context-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .demo-tag {
+    font-size: 10px; font-family: 'Space Mono', monospace;
+    padding: 4px 10px; border-radius: 8px;
+    border: 1px solid #1E2530; color: #64748B;
+  }
+  .demo-tag.active { border-color: rgba(96,165,250,0.3); color: #60A5FA; background: rgba(96,165,250,0.08); }
+</style>
+</head>
+<body>
+
+<!-- Demo page context -->
+<div class="demo-header">
+  <div class="demo-title">SeasonWars Dev Kit · Example #3</div>
+  <div class="demo-headline">xZod Decision Widget</div>
+  <div class="demo-sub">Add real-time burn strategy to any on-chain app.<br>Plug & play. No dependencies. One script tag.</div>
+</div>
+
+<!-- Integration code -->
+<div class="code-preview">
+  <span class="comment">// Integrate in 1 line</span><br>
+  <span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="val">"https://xzod.io/widget.js"</span><span class="tag">&gt;&lt;/script&gt;</span><br>
+  <span class="tag">&lt;div</span> <span class="attr">id</span>=<span class="val">"xzod-widget"</span> <span class="attr">data-amount</span>=<span class="val">"1000"</span><span class="tag">&gt;&lt;/div&gt;</span>
+</div>
+
+<!-- THE WIDGET -->
+<div class="xzod-widget">
+
+  <div class="xw-header">
+    <div class="xw-title">
+      <div class="xw-title-icon">🧠</div>
+      xZod Strategy
+    </div>
+    <div class="xw-live">
+      <div class="xw-live-dot"></div>
+      LIVE
+    </div>
+  </div>
+
+  <div class="xw-signs">
+    <div class="xw-sign hot">
+      <span class="xw-sign-emoji">🔥</span>
+      TAURUS
+      <span class="xw-sign-name">HOT</span>
+    </div>
+    <div class="xw-sign cold">
+      <span class="xw-sign-emoji">❄️</span>
+      ARIES
+      <span class="xw-sign-name">COLD</span>
+    </div>
+    <div class="xw-sign opp">
+      <span class="xw-sign-emoji">🔮</span>
+      SCORPIO
+      <span class="xw-sign-name">OPP</span>
+    </div>
+  </div>
+
+  <div class="xw-input-wrap">
+    <label class="xw-input-label">AMOUNT TO BURN (ZOD)</label>
+    <input class="xw-input" type="number" id="xwAmount" value="1000" min="1" oninput="xwUpdate()">
+  </div>
+
+  <div class="xw-result">
+    <div class="xw-result-label">BEST MOVE RIGHT NOW</div>
+    <div class="xw-result-main" id="xwMain">
+      Burn <span class="xw-result-sign">♈ Aries</span> (COLD)
+    </div>
+    <div class="xw-result-meta">
+      <span class="xw-mult" id="xwMult">×1.20</span>
+      <span class="xw-pts" id="xwPts">→ 1,200 pts</span>
+      <span class="xw-bonus" id="xwBonus">+20% vs base</span>
+    </div>
+  </div>
+
+  <a class="xw-view-full" href="https://aiorosxz.github.io/seasonwars-strategy-bot-example" target="_blank">
+    View full strategy comparison
+    <span class="xw-view-arrow">→</span>
+  </a>
+
+  <div class="xw-footer">
+    <a class="xw-powered" href="https://xzod.io" target="_blank">
+      <div class="xw-powered-dot"></div>
+      Powered by xZod
+    </a>
+    <a class="xw-contract" href="https://sepolia.etherscan.io/address/0x5598778158a66d376bd96243FC6bc27316fD2fc8" target="_blank">
+      quoteBurn() · Sepolia
+    </a>
+  </div>
+
+</div>
+
+<!-- Demo context -->
+<div class="demo-context">
+  <div class="demo-context-title">SeasonWars Dev Kit</div>
+  <div class="demo-context-row">
+    <span class="demo-tag">Example #1 · Burn Tracker</span>
+    <span class="demo-tag">Example #2 · Strategy Bot</span>
+    <span class="demo-tag active">Example #3 · Widget ← here</span>
+  </div>
+</div>
+
+<script>
+const HOT_IDX  = 1;
+const COLD_IDX = 0;
+const OPP_IDX  = 7;
+const SIGNS = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+const NAMES = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+
+function getBonusBps(idx) {
+  if (idx === COLD_IDX) return 2000;
+  if (idx === OPP_IDX)  return 1000;
+  return 0;
+}
+
+function quoteBurn(amount, sign) {
+  return Math.floor(amount + amount * getBonusBps(sign) / 10000);
+}
+
+function getBestSign() {
+  let best = 0, bestPts = 0;
+  for (let i = 0; i < 12; i++) {
+    const pts = quoteBurn(1, i);
+    if (pts > bestPts) { bestPts = pts; best = i; }
+  }
+  return best;
+}
+
+function xwUpdate() {
+  const amount = parseFloat(document.getElementById('xwAmount').value) || 0;
+  const best = getBestSign();
+  const pts = quoteBurn(amount, best);
+  const bps = getBonusBps(best);
+  const mult = (1 + bps/10000).toFixed(2);
+  const base = quoteBurn(amount, HOT_IDX);
+  const delta = pts - base;
+  const ctx = best === COLD_IDX ? 'COLD' : best === OPP_IDX ? 'OPP' : 'HOT';
+
+  const main = document.getElementById('xwMain');
+  main.classList.add('updating');
+  setTimeout(() => {
+    main.innerHTML = `Burn <span class="xw-result-sign">${SIGNS[best]} ${NAMES[best]}</span> (${ctx})`;
+    document.getElementById('xwMult').textContent = `×${mult}`;
+    document.getElementById('xwPts').textContent = `→ ${pts.toLocaleString()} pts`;
+    document.getElementById('xwBonus').textContent = delta > 0 ? `+${delta} vs base` : 'base';
+    main.classList.remove('updating');
+  }, 120);
+}
+
+xwUpdate();
+</script>
+</body>
+</html>
