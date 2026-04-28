@@ -1,3 +1,20 @@
+# xZod — Decision Layer for On-Chain Apps
+
+Most on-chain apps optimize execution.
+
+We’re exploring the missing layer: **decision**.
+
+→ When to act  
+→ What’s optimal  
+→ How to maximize outcome  
+
+This widget is a minimal proof:  
+one script, and any app can plug into xZod’s decision logic.
+
+👉 Live demo: https://aiorosxz.github.io/seasonwars-decision-widget-example
+
+---
+
 # SeasonWars Dev Kit — Example #3: Decision Widget
 
 > Add real-time burn strategy to any on-chain app.  
@@ -12,13 +29,13 @@ one input, one decision, one action.
 
 ---
 
-## ⚡ What this widget does
+## ⚡ What this actually does
 
 Calls `quoteBurn()` for all 12 signs, returns the best one.  
 Displays HOT / COLD / OPPOSITE in real-time.  
 Updates instantly when amount changes.
 
-That's it. One decision. Clearly displayed.
+That's it. One decision. Clearly displayed. Not more data — better decisions.
 
 ---
 
